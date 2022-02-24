@@ -21,6 +21,6 @@ VALUES ('Расскажите, какое время суток ваше люб�
        ('Что из этого правильно?', 'MULTIPLE_CHOICE', 3);
 
 --The id of the quiz goes first, then, after one #, the answers, divided by %
-INSERT INTO USER_QUIZ (ID, QUIZ_ID, USER_RESPONSES)
+INSERT INTO USER_QUIZ (USER_ID, QUIZ_ID, USER_RESPONSES)
 VALUES (1, 1, '1%2%1%5%7%132%стефан'),
-       (2, 3, '5%4%5%5%3%4%география');
+       (1, 3, '5%4%5%5%3%4%география');

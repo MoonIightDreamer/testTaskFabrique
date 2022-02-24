@@ -42,10 +42,15 @@ public class UserQuizController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/story/{id}")
     public List<String> showPassedQuiz(@PathVariable int id,
                                    @AuthenticationPrincipal AuthUser authUser) {
         return UserQuiz.getListedAnswers(
                 UQRepository.getQuizResult(id, authUser.id()));
+    }
+
+    @GetMapping("/story")
+    public List<List<String>> showAllPassedQuizzes(@AuthenticationPrincipal AuthUser authUser) {
+        return UserQuiz.getListedAnswers(UQRepository.getAllQuizResults(authUser.id()));
     }
 }
