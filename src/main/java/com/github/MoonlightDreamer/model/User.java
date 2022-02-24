@@ -58,13 +58,13 @@ public class User extends NamedEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
-    @CollectionTable(name = "user_quiz",
-            joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "quiz")
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<String> passedQuizzes;
+//    @CollectionTable(name = "user_quiz",
+//            joinColumns = @JoinColumn(name = "user_id"))
+//    @Column(name = "quiz")
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    private List<String> passedQuizzes;
 
     public User(User u) {
         this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles);

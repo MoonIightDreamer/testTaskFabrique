@@ -28,7 +28,7 @@ public class AdminQuestionController {
     private QuestionRepository repository;
 
     @Autowired
-    QuizRepository quizRepository;
+    private QuizRepository quizRepository;
 
     @GetMapping
     public List<Question> getAll() {
