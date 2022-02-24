@@ -16,10 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -60,6 +57,14 @@ public class User extends NamedEntity implements Serializable {
     @JoinColumn(name = "user_id") //https://stackoverflow.com/a/62848296/548473
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
+
+    @CollectionTable(name = "user_quiz",
+            joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "quiz")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<String> passedQuizzes;
 
     public User(User u) {
         this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles);

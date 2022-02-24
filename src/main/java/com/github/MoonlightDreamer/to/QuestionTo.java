@@ -7,6 +7,8 @@ import lombok.Value;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
@@ -25,5 +27,6 @@ public class QuestionTo extends BaseTo{
         this.questionType = questionType;
         this.questionText = questionText;
         this.quizId = quizId;
+        Map<String, Map<Integer, String>> map = new HashMap<String, Map<Integer, String>>();
     }
 }
