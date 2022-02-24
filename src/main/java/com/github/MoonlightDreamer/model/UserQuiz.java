@@ -15,8 +15,8 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "USER_QUIZ")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserQuiz extends BaseEntity {
 
     @NotNull
@@ -30,15 +30,4 @@ public class UserQuiz extends BaseEntity {
     @NotNull
     @Column(name = "user_responses")
     String responses;
-
-    public static List<String> getListedAnswers(UserQuiz uq) {
-        return Arrays.asList(uq.responses.split("%"));
-    }
-
-    public static List<List<String>> getListedAnswers(List<UserQuiz> uqList) {
-        List<List<String>> result = new ArrayList<>();
-        uqList.
-                forEach(uq -> result.add(getListedAnswers(uq)));
-        return result;
-    }
 }

@@ -1,10 +1,12 @@
 package com.github.MoonlightDreamer.web.user;
 
+import com.github.MoonlightDreamer.error.IllegalRequestDataException;
 import com.github.MoonlightDreamer.model.Quiz;
 import com.github.MoonlightDreamer.model.UserQuiz;
 import com.github.MoonlightDreamer.repository.QuizRepository;
 import com.github.MoonlightDreamer.repository.UserQuizRepository;
 import com.github.MoonlightDreamer.repository.UserRepository;
+import com.github.MoonlightDreamer.util.UserQuizUtil;
 import com.github.MoonlightDreamer.web.AuthUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,20 +40,32 @@ public class UserQuizController {
         return quizRepository.getActiveQuizzes();
     }
 
-    @PostMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void takeQuiz(@RequestBody Map<Integer, String> responses, @PathVariable int id) {
-
+    @PostMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void takeQuiz(@RequestBody String responses,
+                         @RequestParam int user_id,
+                         @PathVariable int id) {
+        UQRepository.save(new UserQuiz(user_id, id, responses));
     }
 
     @GetMapping("/story/{id}")
     public List<String> showPassedQuiz(@PathVariable int id,
-                                   @AuthenticationPrincipal AuthUser authUser) {
-        return UserQuiz.getListedAnswers(
-                UQRepository.getQuizResult(id, authUser.id()));
+                                       @AuthenticationPrincipal AuthUser authUser) {
+        List<String> result;
+        try {
+            result = UserQuizUtil.getListedAnswers(
+                    UQRepository.getQuizResult(id, authUser.id()));
+        } catch (RuntimeException e) {
+            return (List.of("Опросов, пройденных с этим ID не обнаружено"));
+        }
+        return result;
     }
 
     @GetMapping("/story")
     public List<List<String>> showAllPassedQuizzes(@AuthenticationPrincipal AuthUser authUser) {
-        return UserQuiz.getListedAnswers(UQRepository.getAllQuizResults(authUser.id()));
+        try {
+            return UserQuizUtil.getListedAnswers(UQRepository.getAllQuizResults(authUser.id()));
+        } catch (RuntimeException e) {
+            return (List.of(List.of("Опросов, пройденных с этим ID не обнаружено")));
+        }
     }
 }
