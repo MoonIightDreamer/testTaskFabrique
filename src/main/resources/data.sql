@@ -17,5 +17,5 @@ VALUES ('Уровень IQ', parsedatetime('14-02-2022','dd-MM-yyyy'), parsedate
 
 INSERT INTO QUESTION (QUESTION_TEXT, QUESTION_TYPE, QUIZ_ID)
 VALUES ('Расскажите, какое время суток ваше любимое', 'TEXT', 1),
-       ('Сколько будет 2+2?', 'SINGLE_CHOICE', 1),
-       ('Что из этого правильно?', 'MULTIPLE_CHOICE', 1);
+       ('Сколько будет 2+2?', 'SINGLE_CHOICE', 2),
+       ('Что из этого правильно?', 'MULTIPLE_CHOICE', 3);

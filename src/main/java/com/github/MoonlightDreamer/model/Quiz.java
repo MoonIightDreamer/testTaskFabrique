@@ -34,10 +34,8 @@ public class Quiz extends NamedEntity {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "quiz")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @OrderBy("startDate DESC")
     @OnDelete(action = OnDeleteAction.CASCADE) //https://stackoverflow.com/a/44988100/548473
     @JsonManagedReference
-    @JsonIgnore
     private List<Question> questions;
 
     public Quiz() {
