@@ -3,17 +3,17 @@ package com.github.MoonlightDreamer.to;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Value;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serial;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class UserTo extends BaseTo {
+public class UserTo extends BaseTo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

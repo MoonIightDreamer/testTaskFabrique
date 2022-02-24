@@ -1,7 +1,5 @@
 package com.github.MoonlightDreamer.web.admin;
 
-import com.github.MoonlightDreamer.error.IllegalRequestDataException;
-import com.github.MoonlightDreamer.model.Question;
 import com.github.MoonlightDreamer.model.Quiz;
 import com.github.MoonlightDreamer.repository.QuizRepository;
 import com.github.MoonlightDreamer.util.ValidationUtil;

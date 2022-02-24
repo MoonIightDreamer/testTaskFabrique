@@ -1,7 +1,6 @@
 package com.github.MoonlightDreamer.web.admin;
 
 import com.github.MoonlightDreamer.model.Question;
-import com.github.MoonlightDreamer.model.Quiz;
 import com.github.MoonlightDreamer.repository.QuestionRepository;
 import com.github.MoonlightDreamer.repository.QuizRepository;
 import com.github.MoonlightDreamer.to.QuestionTo;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j

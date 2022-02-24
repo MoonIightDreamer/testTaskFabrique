@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-@Tag(name="User's quizzes story")
+@Tag(name = "User's quizzes story")
 public interface UserQuizRepository extends BaseRepository<UserQuiz> {
     @Query("SELECT uq FROM UserQuiz uq WHERE uq.userId=?1 AND uq.quiz_id=?2")
     UserQuiz getQuizResult(int id, int quiz_id);

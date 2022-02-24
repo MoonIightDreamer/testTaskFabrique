@@ -1,71 +1,42 @@
 package com.github.MoonlightDreamer.web.user;
 
-import com.github.MoonlightDreamer.error.IllegalRequestDataException;
 import com.github.MoonlightDreamer.model.Quiz;
 import com.github.MoonlightDreamer.model.UserQuiz;
-import com.github.MoonlightDreamer.repository.QuizRepository;
-import com.github.MoonlightDreamer.repository.UserQuizRepository;
-import com.github.MoonlightDreamer.repository.UserRepository;
-import com.github.MoonlightDreamer.util.UserQuizUtil;
 import com.github.MoonlightDreamer.web.AuthUser;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
 @RequestMapping(value = UserQuizController.REST_API, produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserQuizController {
+public class UserQuizController extends AbstractUserQuizController{
     static final String REST_API = "api/user/quizzes";
-
-    @Autowired
-    private QuizRepository quizRepository;
-
-    @Autowired
-    private UserQuizRepository UQRepository;
-
-//    @GetMapping("/{id}")
-//    public Quiz get(@PathVariable int id) {
-//        return quizRepository.getWithQuestions(id);
-//    }
 
     @GetMapping
     public List<Quiz> getAllActiveQuizzes() {
-        return quizRepository.getActiveQuizzes();
+        return super.getAllActiveQuizzes();
     }
 
-    @PostMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void takeQuiz(@RequestBody String responses,
-                         @RequestParam int user_id,
-                         @PathVariable int id) {
-        UQRepository.save(new UserQuiz(user_id, id, responses));
+    @PostMapping(value = "/{quizId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserQuiz> takeQuiz(@RequestBody String userAnswers,
+                                   @AuthenticationPrincipal AuthUser authUser,
+                                   @PathVariable int quizId) {
+        return super.takeQuiz(userAnswers, authUser.id(), quizId, REST_API);
     }
 
     @GetMapping("/story/{id}")
     public List<String> showPassedQuiz(@PathVariable int id,
                                        @AuthenticationPrincipal AuthUser authUser) {
-        List<String> result;
-        try {
-            result = UserQuizUtil.getListedAnswers(
-                    UQRepository.getQuizResult(id, authUser.id()));
-        } catch (RuntimeException e) {
-            return (List.of("Опросов, пройденных с этим ID не обнаружено"));
-        }
-        return result;
+            return super.showPassedQuiz(id, authUser.id());
     }
 
     @GetMapping("/story")
     public List<List<String>> showAllPassedQuizzes(@AuthenticationPrincipal AuthUser authUser) {
-        try {
-            return UserQuizUtil.getListedAnswers(UQRepository.getAllQuizResults(authUser.id()));
-        } catch (RuntimeException e) {
-            return (List.of(List.of("Опросов, пройденных с этим ID не обнаружено")));
-        }
+        return super.showAllPassedQuizzes(authUser.id());
     }
 }

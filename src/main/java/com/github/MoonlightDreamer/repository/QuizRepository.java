@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-@Tag(name="Quizzes Controller")
-public interface QuizRepository extends BaseRepository<Quiz>{
+@Tag(name = "Quizzes Controller")
+public interface QuizRepository extends BaseRepository<Quiz> {
     @EntityGraph(attributePaths = {"questions"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT q FROM Quiz q WHERE q.id=?1")
     Quiz getWithQuestions(int id);

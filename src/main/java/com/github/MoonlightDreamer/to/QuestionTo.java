@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
-public class QuestionTo extends BaseTo{
+public class QuestionTo extends BaseTo {
     @NotNull
     @Enumerated(EnumType.STRING)
     QuestionType questionType;
