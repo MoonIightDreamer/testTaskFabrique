@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(value = UserQuizController.REST_API, produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserQuizController extends AbstractUserQuizController{
+public class UserQuizController extends AbstractUserQuizController {
     static final String REST_API = "api/user/quizzes";
 
     @GetMapping
@@ -24,15 +24,15 @@ public class UserQuizController extends AbstractUserQuizController{
 
     @PostMapping(value = "/{quizId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserQuiz> takeQuiz(@RequestBody String userAnswers,
-                                   @AuthenticationPrincipal AuthUser authUser,
-                                   @PathVariable int quizId) {
+                                             @AuthenticationPrincipal AuthUser authUser,
+                                             @PathVariable int quizId) {
         return super.takeQuiz(userAnswers, authUser.id(), quizId, REST_API);
     }
 
     @GetMapping("/story/{id}")
     public List<String> showPassedQuiz(@PathVariable int id,
                                        @AuthenticationPrincipal AuthUser authUser) {
-            return super.showPassedQuiz(id, authUser.id());
+        return super.showPassedQuiz(id, authUser.id());
     }
 
     @GetMapping("/story")

@@ -22,7 +22,7 @@ public class AdminQuizController {
     @Autowired
     QuizRepository repository;
 
-    static final String REST_URL = "api/admin/quiz";
+    public static final String REST_URL = "api/admin/quiz";
 
     @GetMapping
     public List<Quiz> getAll() {
