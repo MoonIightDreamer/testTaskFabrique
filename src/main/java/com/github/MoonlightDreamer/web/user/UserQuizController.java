@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = UserQuizController.REST_API, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserQuizController extends AbstractUserQuizController {
-    static final String REST_API = "api/user/quizzes";
+    public static final String REST_API = "/api/user/quizzes";
 
     @GetMapping
     public List<Quiz> getAllActiveQuizzes() {

@@ -1,5 +1,7 @@
 package com.github.MoonlightDreamer.web.user;
 
+import com.github.MoonlightDreamer.error.IllegalRequestDataException;
+import com.github.MoonlightDreamer.error.NotFoundException;
 import com.github.MoonlightDreamer.model.Quiz;
 import com.github.MoonlightDreamer.model.UserQuiz;
 import com.github.MoonlightDreamer.repository.QuizRepository;

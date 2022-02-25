@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = AdminQuestionController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminQuestionController {
-    static final String REST_URL = "api/admin/questions";
+    static final String REST_URL = "/api/admin/questions";
 
     @Autowired
     private QuestionRepository repository;
@@ -53,6 +53,7 @@ public class AdminQuestionController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody QuestionTo questionTo, @PathVariable int id) {
         log.info("update {} with id = {}", questionTo, id);
         ValidationUtil.assureIdConsistent(questionTo, id);

@@ -30,4 +30,11 @@ public class UserQuiz extends BaseEntity {
     @NotNull
     @Column(name = "user_responses")
     String responses;
+
+    public UserQuiz(Integer id, Integer userId, Integer quiz_id, String responses) {
+        super(id);
+        this.userId = userId;
+        this.quiz_id = quiz_id;
+        this.responses = responses;
+    }
 }

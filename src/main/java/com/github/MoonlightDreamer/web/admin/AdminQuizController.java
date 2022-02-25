@@ -22,7 +22,7 @@ public class AdminQuizController {
     @Autowired
     QuizRepository repository;
 
-    public static final String REST_URL = "api/admin/quiz";
+    public static final String REST_URL = "/api/admin/quiz";
 
     @GetMapping
     public List<Quiz> getAll() {
@@ -52,6 +52,7 @@ public class AdminQuizController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody Quiz quiz, @PathVariable int id) {
         log.info("update {} with id = {}", quiz, id);
         ValidationUtil.assureIdConsistent(quiz, id);

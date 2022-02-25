@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = UnauthorizedController.REST_API, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UnauthorizedController extends AbstractUserQuizController {
-    static final String REST_API = "api/guest/quizzes";
+    static final String REST_API = "/api/guest/quizzes";
 
     @PostMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void takeQuiz(@RequestBody String responses,
