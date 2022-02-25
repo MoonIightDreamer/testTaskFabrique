@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit;
 public class QuizTestData {
 
     public static final MatcherFactory.Matcher<Quiz> QUIZ_MATCHER
-            = MatcherFactory.usingIgnoringFieldsComparator(Quiz.class, "questions");
+            = MatcherFactory.usingIgnoringFieldsComparator(Quiz.class, "questions", "startDate");
 
     public static final int NOT_FOUND = 10;
     public static final int QUIZ1_ID = 1;
