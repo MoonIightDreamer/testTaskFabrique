@@ -59,7 +59,6 @@ public class AdminQuestionController {
         ValidationUtil.assureIdConsistent(questionTo, id);
         Question updatedQuestion = repository.findById(id).orElse(null);
         assert updatedQuestion != null;
-        QuestionUtil.updateFromTo(questionTo, updatedQuestion, quizRepository);
-        repository.save(updatedQuestion);
+        repository.save(QuestionUtil.updateFromTo(questionTo, updatedQuestion, quizRepository));
     }
 }

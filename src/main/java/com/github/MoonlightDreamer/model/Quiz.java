@@ -21,9 +21,10 @@ import java.util.List;
 @Table(name = "quiz")
 public class Quiz extends NamedEntity {
 
+    @NotNull
     @Column(name = "start_date", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDate startDate;
+    private LocalDate startDate = LocalDate.now();
 
     @Column(name = "end_date", nullable = false)
     @NotNull
@@ -40,6 +41,13 @@ public class Quiz extends NamedEntity {
 
     public Quiz() {
 
+    }
+
+    public Quiz(Quiz quiz) {
+        super(quiz.getId(), quiz.getName());
+        this.startDate = quiz.getStartDate();
+        this.endDate = quiz.getEndDate();
+        this.description = quiz.getDescription();
     }
 
     public Quiz(Integer id, String name, LocalDate startDate, LocalDate endDate, String description) {

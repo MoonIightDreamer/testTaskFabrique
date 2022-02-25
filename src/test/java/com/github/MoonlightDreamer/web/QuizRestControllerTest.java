@@ -2,7 +2,9 @@ package com.github.MoonlightDreamer.web;
 
 import com.github.MoonlightDreamer.model.Quiz;
 import com.github.MoonlightDreamer.repository.QuizRepository;
+import com.github.MoonlightDreamer.to.QuizTo;
 import com.github.MoonlightDreamer.util.JsonUtil;
+import com.github.MoonlightDreamer.util.QuizUtil;
 import com.github.MoonlightDreamer.web.admin.AdminQuizController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import static com.github.MoonlightDreamer.TestData.QuizTestData.*;
@@ -56,13 +60,15 @@ public class QuizRestControllerTest extends AbstractRestControllerTest {
 
     @Test
     void update() throws Exception {
-        Quiz updated = getUpdated();
+        QuizTo updatedTo = new QuizTo(null, "имя",
+                LocalDate.now().plus(2, ChronoUnit.DAYS), "описание");
         perform(MockMvcRequestBuilders.put(REST_URL + QUIZ1_ID)
                 .with(userHttpBasic(admin))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
+                .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        QUIZ_MATCHER.assertMatch(quizRepository.getById(QUIZ1_ID), getUpdated());
+        QUIZ_MATCHER.assertMatch(quizRepository.getById(QUIZ1_ID),
+                QuizUtil.updateFromTo(new Quiz(quiz1), updatedTo));
     }
 }

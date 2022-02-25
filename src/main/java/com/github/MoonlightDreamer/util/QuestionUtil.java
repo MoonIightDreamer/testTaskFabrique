@@ -16,9 +16,10 @@ public class QuestionUtil {
         return result;
     }
 
-    public static void updateFromTo(QuestionTo questionTo, Question question, QuizRepository quizRepository) {
+    public static Question updateFromTo(QuestionTo questionTo, Question question, QuizRepository quizRepository) {
         question.setQuestionType(questionTo.getQuestionType());
         question.setQuestionText(questionTo.getQuestionText());
         question.setQuiz(quizRepository.getById(questionTo.getQuizId()));
+        return question;
     }
 }

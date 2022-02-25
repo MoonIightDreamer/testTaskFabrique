@@ -1,7 +1,9 @@
 package com.github.MoonlightDreamer.web.admin;
 
+import com.github.MoonlightDreamer.error.NotFoundException;
 import com.github.MoonlightDreamer.model.Quiz;
 import com.github.MoonlightDreamer.repository.QuizRepository;
+import com.github.MoonlightDreamer.to.QuizTo;
 import com.github.MoonlightDreamer.util.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
+
+import static com.github.MoonlightDreamer.util.QuizUtil.createNewFromTo;
+import static com.github.MoonlightDreamer.util.QuizUtil.updateFromTo;
 
 @Slf4j
 @RestController
@@ -44,18 +49,19 @@ public class AdminQuizController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@Valid @RequestBody Quiz quiz) {
-        log.info("create {}", quiz);
-        ValidationUtil.checkNew(quiz);
-        quiz.setStartDate(LocalDate.now());
-        repository.save(quiz);
+    public void create(@Valid @RequestBody QuizTo quizTo) {
+        log.info("create {}", quizTo);
+        ValidationUtil.checkNew(quizTo);
+        repository.save(createNewFromTo(quizTo));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Quiz quiz, @PathVariable int id) {
-        log.info("update {} with id = {}", quiz, id);
-        ValidationUtil.assureIdConsistent(quiz, id);
-        repository.save(quiz);
+    public void update(@Valid @RequestBody QuizTo quizTo, @PathVariable int id) {
+        log.info("update {} with id = {}", quizTo, id);
+        ValidationUtil.assureIdConsistent(quizTo, id);
+        Quiz quiz = repository.findById(id).orElse(null);
+        if(quiz == null) throw new NotFoundException("No quiz with such id!");
+        repository.save(updateFromTo(quiz, quizTo));
     }
 }
